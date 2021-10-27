@@ -10,9 +10,9 @@
       required
       v-bind:id="id"
       v-bind:placeholder="placeholder"
-      v-model="input"
+      @change="handler"
     />
-    <span v-if="!isValid">
+    <span v-if="!zxc">
       {{ message }}
     </span>
   </div>
@@ -34,51 +34,61 @@ export default {
       type: String,
       default: 'Placeholder',
     },
-    validation: String
+    validation: String,
+    handler: Function,
+    zxc: [Boolean, String]
   },
   data: () => ({
     input: '',
-    message: '',
-    isValid: true
+    // message: '',
+    isValid: false
   }),
   computed: {
-
-  },
-  watch: {
-    input(value) {
-      this.input = value
-      this.validationHandler(value)
-    }
-  },
-  methods: {
-    validationHandler(value) {
-      const name = /^[^0-9][a-zA-Z- ]{2,}$/
-      const phone = /^\+?\d\(?\d{3}\)?\d{3}-?\d{2}-?\d{2}$/
-      const email = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
-      if (this.validation === 'name') {
-        if (name.test(value) || value === '') {
-          this.isValid = true
-        } else {
-          this.message = 'Invalid name'
-          this.isValid = false
-        }
-      } else if (this.validation === 'phone') {
-        if (phone.test(value) || value === '') {
-          this.isValid = true
-        } else {
-          this.message = 'Invalid phone'
-          this.isValid = false
-        }
-      } else if (this.validation === 'email') {
-        if (email.test(value) || value === '') {
-          this.isValid = true
-        } else {
-          this.message = 'Invalid email'
-          this.isValid = false
-        }
+    message() {
+      if (!this.zxc) {
+        return 'err message'
+      } else {
+        return ''
       }
     }
-  }
+  },
+  // watch: {
+  //   input(value) {
+  //     this.input = value
+  //     this.validationHandler(value)
+  //   }
+  // },
+  // methods: {
+  //   validationHandler(value) {
+  //     const name = /^[^0-9][a-zA-Z- ]{2,}$/
+  //     const phone = /^\+?\d\(?\d{3}\)?\d{3}-?\d{2}-?\d{2}$/
+  //     const email = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
+  //     if (this.validation === 'name') {
+  //       if (name.test(value) || value === '') {
+  //         this.isValid = true
+  //         this.$store.commit('nameHandler', value)
+  //         console.log(this.$store.state.form.data.name)
+  //       } else {
+  //         this.message = 'Invalid name'
+  //         this.isValid = false
+  //       }
+  //     } else if (this.validation === 'phone') {
+  //       if (phone.test(value) || value === '') {
+  //         this.isValid = true
+  //       } else {
+  //         this.message = 'Invalid phone'
+  //         this.isValid = false
+  //       }
+  //     } else if (this.validation === 'email') {
+  //       if (email.test(value) || value === '') {
+  //         this.isValid = true
+  //       } else {
+  //         this.message = 'Invalid email'
+  //         this.isValid = false
+  //       }
+  //     }
+  //   }
+  // }
 }
 </script>
 

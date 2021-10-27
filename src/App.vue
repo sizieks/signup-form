@@ -1,12 +1,19 @@
 <template>
   <Title class="title"/>
-  <Input id="name" class="input" label="Имя" placeholder="Введите ваше имя" validation="name"/>
+  <Input
+    id="name"
+    class="input"
+    label="Имя"
+    placeholder="Введите ваше имя"
+    validation="name"
+    :handler="nameHandler"
+    :zxc="this.$store.state.form.data.name"
+  />
   <Input id="email" class="input" label="Email" placeholder="Введите ваш email" validation="email"/>
   <Input id="phone" class="input" label="Номер телефона" placeholder="Введите номер телефона" validation="phone"/>
   <Select class="select" label="Язык" placeholder="Язык" :options="['Русский', 'Английский', 'Китайский', 'Испанский']"/>
   <Agreement class="agreement"/>
   <Button class="button" label="Зарегистрироваться"/>
-  {{ $store.state[count] }}
 </template>
 
 <script>
@@ -19,6 +26,7 @@ import store from '@/store'
 
 export default {
   name: 'App',
+  store: store,
   components: {
     Button,
     Input,
@@ -26,7 +34,45 @@ export default {
     Title,
     Agreement
   },
-  store: store,
+  data: () => ({
+    isValidName: false
+  }),
+  methods: {
+    nameHandler(e) {
+      const value = e.target.value
+      const name = /^[^0-9][a-zA-Z- ]{2,}$/
+      if (name.test(value) || value === '') {
+        this.isValidName = true
+        console.log('Valid nameHandler by parent')
+        console.log('Name from store', this.$store.state.form.data.name)
+        this.$store.commit('nameHandler', value)
+      } else {
+        this.isValidName = false
+        console.log('Invalid nameHandler by parent')
+        // this.message = 'Некорректное имя'
+        this.$store.commit('nameHandler', false)
+        console.log('Name from store', this.$store.state.form.data.name)
+      }
+    },
+    emailHandler(value) {
+      const email = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
+      if (email.test(value) || value === '') {
+        this.isValid = true
+      } else {
+        this.message = 'Некорректный email'
+        this.isValid = false
+      }
+    },
+    phoneHandler(value) {
+      const phone = /^\+?\d\(?\d{3}\)?\d{3}-?\d{2}-?\d{2}$/
+      if (phone.test(value) || value === '') {
+        this.isValid = true
+      } else {
+        this.message = 'Некорректный номер телефона'
+        this.isValid = false
+      }
+    }
+  }
 }
 </script>
 

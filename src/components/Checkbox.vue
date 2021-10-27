@@ -16,11 +16,24 @@
 export default {
   name: 'Checkbox',
   data: () => ({
-    check: false,
+    check: false
   }),
+  // computed: {
+  //   check() {
+  //     return this.$store.state.agreement
+  //   }
+  // },
   methods: {
+  //   checkHandler() {
+  //     console.log('commiting')
+  //     this.$store.commit('agreementHandler')
+  //   }
+  // }
     checkHandler() {
+      console.log(this.$store.state.form.data.agreement)
       this.check = !this.check
+      this.$store.commit('agreementHandler')
+      console.log(this.$store.state.form.data.agreement)
     }
   }
 }
