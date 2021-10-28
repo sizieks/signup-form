@@ -1,6 +1,6 @@
 <template>
   <form
-    class="registration-form"
+    class="signup-form"
   >
     <Title class="title"/>
     <Input
@@ -10,7 +10,7 @@
       placeholder="Введите ваше имя"
       message="Некорректное имя"
       :validation="nameHandler"
-      :isValid="this.$store.state.form.data.name"
+      :isValid="$store.state.form.data.name"
     />
     <Input
       id="email"
@@ -19,7 +19,7 @@
       placeholder="Введите ваш email"
       message="Некорректный email"
       :validation="emailHandler"
-      :isValid="this.$store.state.form.data.email"
+      :isValid="$store.state.form.data.email"
     />
     <Input
       id="phone"
@@ -28,7 +28,7 @@
       placeholder="Введите номер телефона"
       message="Некорректный номер телефона"
       :validation="phoneHandler"
-      :isValid="this.$store.state.form.data.phone"
+      :isValid="$store.state.form.data.phone"
     />
     <Select
       class="select"
@@ -50,7 +50,8 @@
     <Button
       class="button"
       label="Зарегистрироваться"
-      :isValid="this.$store.state.form.isValid"
+      type="submit"
+      :isValid="$store.state.form.isValid"
     />
   </form>
 </template>
@@ -122,13 +123,15 @@ export default {
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   height: 789px;
-  width: 460px;
-
+  min-width: 360px;
+  max-width: 460px;
   box-sizing: border-box;
   padding: 40px 30px;
   margin: 30px auto;
-
   background: #FFFFFF;
   box-shadow: 0px 12px 24px rgba(44, 39, 56, 0.02), 0px 32px 64px rgba(44, 39, 56, 0.04);
   border-radius: 24px;
@@ -148,17 +151,14 @@ export default {
 
 .agreement {
   margin-bottom: 37px;
-
   display: flex;
   align-items: center;
-
   min-width: 300px;
   font-family: IBM Plex Sans;
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
   line-height: 21px;
-
   color: #756F86;
 }
 

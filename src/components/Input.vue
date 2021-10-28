@@ -83,12 +83,6 @@ input {
   padding: 16px;
   padding-bottom: 15px;
 
-  position: relative;
-  left: 0px;
-  right: 0px;
-  top: 0px;
-  bottom: 0px;
-
   background: #FFFFFF;
   border: 1px solid #DBE2EA;
   box-sizing: border-box;

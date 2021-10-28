@@ -1,11 +1,10 @@
 <template>
-  <div>
     <button
+      :type="type"
       :disabled="!isValid"
     >
       {{ label }}
     </button>
-  </div>
 </template>
 
 <script>
@@ -16,6 +15,7 @@ export default {
       type: String,
       default: 'Label'
     },
+    type: String,
     isValid: Boolean
   }
 }
@@ -24,27 +24,14 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&display=swap');
 
-div {
-  position: relative;
-  left: 0px;
-  right: 0px;
-  top: 0px;
-  bottom: 0px;
-
-  height: 56px;
-  min-width: 300px;
-}
-
-
 button {
-  height: 100%;
+  height: 56px;
   width: 100%;
-
+  min-width: 300px;
   border: none;
   background: #0880AE;
   box-shadow: 0px 2px 4px rgba(44, 39, 56, 0.08), 0px 4px 8px rgba(44, 39, 56, 0.08);
   border-radius: 6px;
-
   color: #ebf4f8;
   font-style: normal;
   font-weight: 500;

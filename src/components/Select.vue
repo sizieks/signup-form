@@ -97,7 +97,6 @@ export default {
   height: 21px;
   left: 0px;
   top: 0px;
-
   color: #756F86;
   cursor: default;
 }
@@ -105,27 +104,23 @@ export default {
 .select {
   height: 80px;
   min-width: 300px;
-
   font-family: IBM Plex Sans;
   font-style: normal;
   font-weight: normal;
   font-size: 16px;
   line-height: 21px;
   position: relative;
-
   outline: none;
 }
 
 .select-header {
   height: 52px;
   min-width: 300px;
-
   position: absolute;
   left: 0%;
   right: 0%;
   top: 28px;
   bottom: 0%;
-
   background: #FFFFFF;
   border: 1px solid #DBE2EA;
   box-sizing: border-box;
@@ -146,7 +141,6 @@ export default {
   right: 11px;
   top: 11px;
   bottom: 11px;
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -161,15 +155,12 @@ export default {
   position: relative;
   height: 21px;
   left: 16px;
-  right: 57px;
   top: 16px;
-
   font-family: IBM Plex Sans;
   font-style: normal;
   font-weight: normal;
   font-size: 16px;
   line-height: 21px;
-
   color: #2C2738;
   cursor: default;
 }
@@ -177,25 +168,21 @@ export default {
 .select-body {
   height: 185px;
   min-width: 300px;
-
   margin-top: 4px;
-  
   background: #FFFFFF;
   border: 1px solid #DBE2EA;
   box-sizing: border-box;
   box-shadow: 0px 4px 8px rgba(44, 39, 56, 0.04), 0px 20px 20px rgba(44, 39, 56, 0.04);
   border-radius: 6px;
-
   position: absolute;
   left: 0px;
   right: 0px;
   top: 80px;
   bottom: 0px;
   display: none; 
-  /* max-height: 132px;
-  overflow-y: auto; */
-
   z-index: 1;
+  /* max-height: 132px; */
+  /* overflow-y: auto; */
 }
 
 .select.is-active .select-body {
