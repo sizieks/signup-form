@@ -1,19 +1,58 @@
 <template>
-  <Title class="title"/>
-  <Input
-    id="name"
-    class="input"
-    label="Имя"
-    placeholder="Введите ваше имя"
-    validation="name"
-    :handler="nameHandler"
-    :zxc="this.$store.state.form.data.name"
-  />
-  <Input id="email" class="input" label="Email" placeholder="Введите ваш email" validation="email"/>
-  <Input id="phone" class="input" label="Номер телефона" placeholder="Введите номер телефона" validation="phone"/>
-  <Select class="select" label="Язык" placeholder="Язык" :options="['Русский', 'Английский', 'Китайский', 'Испанский']"/>
-  <Agreement class="agreement"/>
-  <Button class="button" label="Зарегистрироваться"/>
+  <form
+    class="registration-form"
+  >
+    <Title class="title"/>
+    <Input
+      id="name"
+      class="input"
+      label="Имя"
+      placeholder="Введите ваше имя"
+      message="Некорректное имя"
+      :validation="nameHandler"
+      :isValid="this.$store.state.form.data.name"
+    />
+    <Input
+      id="email"
+      class="input"
+      label="Email"
+      placeholder="Введите ваш email"
+      message="Некорректный email"
+      :validation="emailHandler"
+      :isValid="this.$store.state.form.data.email"
+    />
+    <Input
+      id="phone"
+      class="input"
+      label="Номер телефона"
+      placeholder="Введите номер телефона"
+      message="Некорректный номер телефона"
+      :validation="phoneHandler"
+      :isValid="this.$store.state.form.data.phone"
+    />
+    <Select
+      class="select"
+      label="Язык"
+      placeholder="Язык"
+      :options="['Русский', 'Английский', 'Китайский', 'Испанский']"
+      @changeSelected="languageHandler"
+    />
+    <div
+      class="agreement"
+    >
+      <Checkbox
+        @changeCheck="agreementHandler"
+      />
+      <span>
+        Принимаю <a href="/">условия</a> использования
+      </span>
+    </div>
+    <Button
+      class="button"
+      label="Зарегистрироваться"
+      :isValid="this.$store.state.form.isValid"
+    />
+  </form>
 </template>
 
 <script>
@@ -21,56 +60,57 @@ import Button from './components/Button.vue'
 import Input from './components/Input.vue'
 import Select from './components/Select.vue'
 import Title from './components/Title.vue'
-import Agreement from './components/Agreement.vue'
+import Checkbox from './components/Checkbox.vue'
 import store from '@/store'
 
 export default {
   name: 'App',
   store: store,
   components: {
-    Button,
+    Title,
     Input,
     Select,
-    Title,
-    Agreement
+    Checkbox,
+    Button,
   },
-  data: () => ({
-    isValidName: false
-  }),
   methods: {
-    nameHandler(e) {
-      const value = e.target.value
-      const name = /^[^0-9][a-zA-Z- ]{2,}$/
-      if (name.test(value) || value === '') {
-        this.isValidName = true
-        console.log('Valid nameHandler by parent')
-        console.log('Name from store', this.$store.state.form.data.name)
-        this.$store.commit('nameHandler', value)
+    nameHandler(value) {
+      const regex = /^[^0-9][a-zA-Zа-яА-Я- ]{2,}$/
+      if (regex.test(value)) {
+        this.$store.commit('updateName', value)
       } else {
-        this.isValidName = false
-        console.log('Invalid nameHandler by parent')
-        // this.message = 'Некорректное имя'
-        this.$store.commit('nameHandler', false)
-        console.log('Name from store', this.$store.state.form.data.name)
+        this.$store.commit('updateName', undefined)
       }
+      this.formHandler()
     },
     emailHandler(value) {
-      const email = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
-      if (email.test(value) || value === '') {
-        this.isValid = true
+      const regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
+      if (regex.test(value)) {
+        this.$store.commit('updateEmail', value)
       } else {
-        this.message = 'Некорректный email'
-        this.isValid = false
+        this.$store.commit('updateEmail', undefined)
       }
+      this.formHandler()
     },
     phoneHandler(value) {
-      const phone = /^\+?\d\(?\d{3}\)?\d{3}-?\d{2}-?\d{2}$/
-      if (phone.test(value) || value === '') {
-        this.isValid = true
+      const regex = /^\+?\d\(?\d{3}\)?\d{3}-?\d{2}-?\d{2}$/
+      if (regex.test(value)) {
+        this.$store.commit('updatePhone', value)
       } else {
-        this.message = 'Некорректный номер телефона'
-        this.isValid = false
+        this.$store.commit('updatePhone', undefined)
       }
+      this.formHandler()
+    },
+    languageHandler(value) {
+      this.$store.commit('updateLanguage', value)
+      this.formHandler()
+    },
+    agreementHandler(value) {
+      this.$store.commit('updateAgreement', value)
+      this.formHandler()
+    },
+    formHandler() {
+       this.$store.commit('updateForm')
     }
   }
 }
@@ -108,5 +148,31 @@ export default {
 
 .agreement {
   margin-bottom: 37px;
+
+  display: flex;
+  align-items: center;
+
+  min-width: 300px;
+  font-family: IBM Plex Sans;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 21px;
+
+  color: #756F86;
+}
+
+.agreement span {
+  margin-left: 8px;
+}
+
+.agreement a {
+  text-decoration: none;
+  color: #0880AE;
+}
+
+.agreement a:focus {
+  outline: none;
+  border: 2px solid #0880AE;
 }
 </style>

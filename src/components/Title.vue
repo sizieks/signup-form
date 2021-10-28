@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: 'Title',
+  name: 'Title'
 }
 </script>
 
@@ -38,5 +38,10 @@ span {
 a {
   text-decoration: none;
   color: #0880AE;
+}
+
+a:focus {
+  outline: none;
+  border: 2px solid #0880AE;
 }
 </style>

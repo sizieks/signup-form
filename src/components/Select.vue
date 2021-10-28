@@ -4,8 +4,14 @@
     @blur="isActive = false"
     @click="selectHandler"
   >
-    <span class="select-label">{{ label }}</span>
-    <div class="select-header">
+    <span
+      class="select-label"
+    >
+      {{ label }}
+    </span>
+    <div
+      class="select-header"
+    >
       <span
         v-if="isActive"
         class="select-current"
@@ -25,11 +31,15 @@
       >
         {{ selected }}
       </span>
-      <i class="select-icon material-icons">
+      <i
+        class="select-icon material-icons"
+      >
         expand_more
       </i>
     </div>
-    <div class="select-body">
+    <div
+      class="select-body"
+    >
       <div
         class="select-item"
         v-for="(option, index) in options"
@@ -46,17 +56,17 @@
 export default {
   name: 'Select',
   props: {
-    options: {
-      type: Array,
-      default: () => ['Item', 'Item', 'Item', 'Item']
+    label: {
+      type: String,
+      default: 'Label'
     },
     placeholder: {
       type: String,
       default: 'Dropdown'
     },
-    label: {
-      type: String,
-      default: 'Label'
+    options: {
+      type: Array,
+      default: () => ['Item', 'Item', 'Item', 'Item']
     }
   },
   data: () => ({
@@ -69,6 +79,7 @@ export default {
     },
     selectChoose(index) {
       this.selected = this.options[index]
+      this.$emit('changeSelected', this.selected)
     }
   }
 }

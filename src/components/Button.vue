@@ -1,7 +1,7 @@
 <template>
   <div>
     <button
-      :disabled="disabled"
+      :disabled="!isValid"
     >
       {{ label }}
     </button>
@@ -15,11 +15,9 @@ export default {
     label: {
       type: String,
       default: 'Label'
-    }
-  },
-  data: () => ({
-    disabled: true
-  })
+    },
+    isValid: Boolean
+  }
 }
 </script>
 

@@ -6,13 +6,15 @@
       {{ label }}
     </label>
     <input
-      type="text"
       required
+      type="text"
       v-bind:id="id"
       v-bind:placeholder="placeholder"
-      @change="handler"
+      v-model.trim="input"
     />
-    <span v-if="!zxc">
+    <span
+      v-if="!isValid && input"
+    >
       {{ message }}
     </span>
   </div>
@@ -34,61 +36,22 @@ export default {
       type: String,
       default: 'Placeholder',
     },
-    validation: String,
-    handler: Function,
-    zxc: [Boolean, String]
+    message: {
+      type: String,
+      default: 'Invalid input'
+    },
+    validation: Function,
+    isValid: String
   },
   data: () => ({
-    input: '',
-    // message: '',
-    isValid: false
+    input: ''
   }),
-  computed: {
-    message() {
-      if (!this.zxc) {
-        return 'err message'
-      } else {
-        return ''
-      }
+  watch: {
+    input(value) {
+      this.input = value
+      this.validation(value)
     }
   },
-  // watch: {
-  //   input(value) {
-  //     this.input = value
-  //     this.validationHandler(value)
-  //   }
-  // },
-  // methods: {
-  //   validationHandler(value) {
-  //     const name = /^[^0-9][a-zA-Z- ]{2,}$/
-  //     const phone = /^\+?\d\(?\d{3}\)?\d{3}-?\d{2}-?\d{2}$/
-  //     const email = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
-  //     if (this.validation === 'name') {
-  //       if (name.test(value) || value === '') {
-  //         this.isValid = true
-  //         this.$store.commit('nameHandler', value)
-  //         console.log(this.$store.state.form.data.name)
-  //       } else {
-  //         this.message = 'Invalid name'
-  //         this.isValid = false
-  //       }
-  //     } else if (this.validation === 'phone') {
-  //       if (phone.test(value) || value === '') {
-  //         this.isValid = true
-  //       } else {
-  //         this.message = 'Invalid phone'
-  //         this.isValid = false
-  //       }
-  //     } else if (this.validation === 'email') {
-  //       if (email.test(value) || value === '') {
-  //         this.isValid = true
-  //       } else {
-  //         this.message = 'Invalid email'
-  //         this.isValid = false
-  //       }
-  //     }
-  //   }
-  // }
 }
 </script>
 
@@ -117,12 +80,10 @@ input {
   margin-top: 28px;
   margin-bottom: 26px;
 
-  padding-top: 16px;
+  padding: 16px;
   padding-bottom: 15px;
-  padding-left: 16px;
-  padding-right: 16px;
 
-  position: absolute;
+  position: relative;
   left: 0px;
   right: 0px;
   top: 0px;
